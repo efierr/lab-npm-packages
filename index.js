@@ -74,7 +74,7 @@ function countClassesByInstructor(collection, instructor) {
  if (array.length === 0) {
   return "There is no instructor by that name." 
  } else {
-  return array.length
+  return array.length;
  }
 }
 
@@ -83,14 +83,19 @@ function countClassesByInstructor(collection, instructor) {
  * @param {Object} collection - an array of member objects
  * @return {number} The array of member objects with only active members
  */
-function removeInactiveMembers(collection) {}
+function removeInactiveMembers(collection) {
+  return collection.filter(member => member.currentMember);
+}
 
 /**
  * Get a list of unique class titles and their price
  * @param {Object} collection - an array of yoga class objects
  * @return {number} An array of objects that have a unique title and a price
  */
-function getUniqueClasses(collection) {}
+function getUniqueClasses(collection) {
+  const uniqueClasses = _.uniqBy(collection, 'title');
+  return _.map(uniqueClasses, yogaClass => _.pick(yogaClass, ['title', 'priceInCents']));
+}
 
 /**
  * Get a list of classes organized by title, then by level.
@@ -98,7 +103,10 @@ function getUniqueClasses(collection) {}
  * @param {Object} collection - an array of yoga class objects
  * @return {number} An array of objects that are organized by title then by level. The array should only have the title, instructor, and level fields
  */
-function orderClassesByTitleAndLevel(collection) {}
+function orderClassesByTitleAndLevel(collection) {
+  const sortedClasses = _.orderBy(collection, ['title', 'level'], ['asc', 'desc']);
+  return _.map(sortedClasses, yogaClass => _.pick(yogaClass, ['title', 'instructor', 'level']));
+}
 
 module.exports = {
   numberOfKeys,
